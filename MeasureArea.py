@@ -5,7 +5,6 @@ from qgis.core import QgsMapLayerRegistry, QgsMapLayer
 from PyQt4.QtGui import *
 from PyQt4.QtCore import QObject, SIGNAL
 from PyQt4.QtSql import QSqlDatabase, QSqlQuery
-# from PyQt4.QtWidgets import QLineEdit
 import resources_rc  
 from qgis.gui import QgsMessageBar
 
@@ -32,11 +31,13 @@ class MeasureArea:
 
         self.textbox = QLineEdit(self.iface.mainWindow())
         # Set width
-        self.textbox.setFixedWidth(130)
+        self.textbox.setFixedWidth(120)
         # Add textbox to toolbar
         self.toolbar.addAction(self.action)
         self.toolbar.addWidget(self.textbox)
         # Set tooltip
+        self.action.toggled.connect(self.enableElements)
+        self.enableElements(False)
         self.textbox.textChanged.connect(self.enableTool) # acho que é aqui o sinal a ser trabalhado
         self.action.toggled.connect(self.enableTool)                                           
         
@@ -46,6 +47,10 @@ class MeasureArea:
     def unload(self):
         # remove o item de ícone do QGIS GUI.
         del self.toolbar
+
+    def enableElements(self, b):
+        self.textbox.setEnabled(b)
+       
         
     def enableTool(self, c):
         if c:
@@ -75,7 +80,6 @@ class MeasureArea:
                 for f in self.layer.selectedFeatures():
                     length += f.geometry().length()
 
-                
                 vlength = round(length,2)
                 self.textbox.setText( "m = " + str(vlength))
                 
@@ -87,14 +91,11 @@ class MeasureArea:
                 for f in self.layer.selectedFeatures():
                     area += f.geometry().area()
                     
-
                 varea = round(area,2)
                 self.textbox.setText(u"m² = " + str(varea) )
 
             else:
                 pass
+
         except AttributeError:
-            print u'Não há layer selecionado!'
-    
-
-
+            self.textbox.setText(u'Não há layer selecionado!')
