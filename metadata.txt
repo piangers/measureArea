@@ -1,0 +1,33 @@
+[general]
+
+
+name=MeasureArea
+qgisMinimumVersion=2.14
+description=ferramenta
+version=0.1
+author=piangers
+email=cesar_piangers@hotmail.com
+
+about=Provide a brief description of the plugin and its purpose.
+
+tracker=http://bugs
+repository=http://repo
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=python
+
+homepage=http://homepage
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
